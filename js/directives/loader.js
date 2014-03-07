@@ -1,4 +1,10 @@
 /*global wtUI*/
+
+/**
+    The loader directive displays a loader image in response to executing operations.
+
+    @class loader
+**/
 wtUI.directive('loader', function () {
     'use strict';
     
@@ -39,8 +45,10 @@ wtUI.directive('loader', function () {
             
             scope.$watch('loader', function (newValue, oldValue, scope) {
                 if (newValue) {
+                    element[0].style.display = 'block';
                     spinner.spin(element[0]);
                 } else {
+                    element[0].style.display = 'none';
                     spinner.stop();
                 }
             });

@@ -1,4 +1,10 @@
 /*global wtUI*/
+
+/**
+    The pager directive displays a pager navigation component.
+
+    @class pager
+**/
 wtUI.directive('pager', function () {
     'use strict';
     

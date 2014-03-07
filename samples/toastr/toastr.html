@@ -1,0 +1,27 @@
+<!doctype html>
+<html data-ng-app='sample'>
+    <head>
+        <link rel="stylesheet" href="../../lib/toastr/toastr.css" type="text/css">
+    </head>
+    <body data-ng-controller="toastrController">
+        <div>
+            <input type="text" data-ng-model="message">
+            <select data-ng-model="type">
+                <option value="success">success</option>
+                <option value="info">info</option>
+                <option value="warning">warning</option>
+                <option value="error">error</option>
+            </select>
+            <button data-ng-click="showToastr()">Show Message</button>
+        </div>
+        
+        <script src="../../lib/jquery/dist/jquery.js"></script>
+        <script src="../../lib/angular/angular.js"></script>
+        <script src="../../lib/angular-touch/angular-touch.js"></script>
+        <script src="../../lib/toastr/toastr.js"></script>
+        
+        <script src="../../js/ui.js"></script>
+        <script src="../../js/services/toastr.js"></script>
+        <script src="../../samples/toastr/toastr.js"></script>
+    </body>
+</html>

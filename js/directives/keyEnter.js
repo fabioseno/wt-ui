@@ -1,4 +1,9 @@
 /*global wtUI*/
+/**
+    The keyEnter directive executes specific actions in response to specific keys pressed.
+
+    @class keyEnter
+**/
 wtUI.directive('keyEnter', ['$timeout', function ($timeout) {
     'use strict';
     
