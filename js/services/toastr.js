@@ -1,4 +1,4 @@
-/*global wtUI*/
+/*global wtUI, toastr*/
 // Component Dependency: Toastr
 
 // USAGE
@@ -15,6 +15,10 @@ wtUI.service('toastr', ['$log', function ($log) {
         "fadeOut": 1000,
         "timeOut": 5000,
         "extendedTimeOut": 1000
+    };
+    
+    this.clear = function () {
+        toastr.clear();
     };
     
     this.show = function (message, type, options) {
