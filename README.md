@@ -3,10 +3,10 @@ wt-ui
 
 A set of reusable UI components built as AngularJS directives and services including:
 
-[Directives]
+## Directives ##
 
 - keyEnter: allows execution of different actions based on selected keyboard keys
-
+ 
 - loader: a loader component that indicates async operations are in progress
 
 - map: a Google Maps proxy
@@ -18,6 +18,6 @@ A set of reusable UI components built as AngularJS directives and services inclu
 - scroller: infinite scroll component
 
 
-[Services]
+## Services  ##
 
 - toastr: notification library
