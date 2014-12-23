@@ -1,6 +1,8 @@
-/tests/coverage/
-/node_modules/
-/lib/
 /docs/
+/lib/
+/node_modules/
+/src/lib/
+/tests/coverage/
+/www/
 
 npm-debug.log

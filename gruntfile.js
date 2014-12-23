@@ -8,7 +8,7 @@ module.exports = function (grunt) {
         clean: ['dist', 'tests/coverage', 'docs'],
         
         jshint: {
-            all: ['js/**/*.js']
+            all: ['src/**/src/*.js']
         },
         
         karma: {
@@ -19,7 +19,7 @@ module.exports = function (grunt) {
         
         concat: {
             dist: {
-                src: ['js/ui.js', 'js/**/*.js'],
+                src: ['components/**/src/*.js'],
                 dest: 'dist/ui_<%= pkg.version %>.js'
             }
         },
@@ -62,6 +62,6 @@ module.exports = function (grunt) {
     });
     
     // Default task
-    grunt.registerTask('default', ['clean', 'jshint', 'concat', 'uglify', 'yuidoc']);
+    grunt.registerTask('default', ['clean', 'jshint', 'concat', 'uglify']);
     
 };

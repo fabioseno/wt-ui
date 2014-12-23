@@ -1,0 +1,48 @@
+html {
+    overflow-x:hidden;
+    font-size: 14px;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+
+    overflow-x: hidden;
+    background-color: #454545;
+}
+
+menu {
+    position: absolute;
+    height:100%;
+    width: 60%;
+    margin: 0px;
+    padding: 10px;
+    color: #e3e3e3;
+    box-sizing: border-box;
+}
+
+ul {
+    margin:0px;
+    padding:0px;
+    list-style-type:none;
+}
+
+ul li {
+    padding: 8px;
+    width: 100%;
+    background-color: #676767;
+    box-sizing: border-box;
+    margin-bottom: 6px;
+}
+
+section {
+    position: absolute;
+    width: 100%;
+    height:100%;
+    background-color: white;
+    color: black;
+}
+
+div.content {
+    padding: 5px;
+}
