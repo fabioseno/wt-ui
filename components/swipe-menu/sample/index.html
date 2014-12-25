@@ -1,32 +1,45 @@
 <html data-ng-app="swipe-menu">
     <head>
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta http-equiv="cleartype" content="on">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui">
-        
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
         <link href="../lib/normalize.css/normalize.css" rel="stylesheet" type="text/css">
+        <link href="../lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="css.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <menu id="menu">
-            <ul>
-                <li>Item 1</li>
-                <li>Item 2</li>
-                <li>Item 3</li>
-                <li>Item 4</li>
-            </ul>
-            <div style="background-color:gray;width:50%;height:50px;">
-                Metade do menu
+        <div class="page" data-ng-controller="swipeMenuController">
+            <menu id="menu"  class="read-only">
+                <ul>
+                    <li>Item 1</li>
+                    <li>Item 2</li>
+                    <li>Item 3</li>
+                    <li>Item 4</li>
+                    <li>Item 1</li>
+                    <li>Item 2</li>
+                    <li>Item 3</li>
+                    <li>Item 4</li>
+                    <li>Item 1</li>
+                    <li>Item 2</li>
+                    <li>Item 3</li>
+                    <li>Item 4</li>
+                </ul>
+                <div style="background-color:gray;width:50%;height:50px;">
+                    Metade do menu
+                </div>
+            </menu>
+            <div class="content" data-swipe-menu="swipeMenu">
+                <div class="section">
+                    <div class="menu" data-css-toggle data-main-class="menu_selected" data-ng-click="toggleMenu();"><i class="fa fa-bars fa-2x menu-icon"></i></div>
+                    <p>Swipe Me >></p>
+                </div>
             </div>
-        </menu>
-        <section class="swipe" data-swipe-menu="menu" data-menu-return="30">
-            <div class="content">
-                <p>Swipe Me >></p>
-            </div>
-        </section>
+        </div>
 
         <script type="text/javascript" src="../lib/angular/angular.js"></script>
+        <script type="text/javascript" src="../lib/angular-touch/angular-touch.js"></script>
+        
         <script type="text/javascript" src="../src/swipe-menu.js"></script>
+        <script type="text/javascript" src="css-toggle.js"></script>
+        <script type="text/javascript" src="ctr.js"></script>
     </body>
 </html>

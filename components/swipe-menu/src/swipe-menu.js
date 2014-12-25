@@ -1,12 +1,12 @@
 /*global angular*/
 
-angular.module('swipe-menu', []);
+angular.module('swipe-menu', ['ngTouch']);
 
-angular.module('swipe-menu').directive('swipeMenu', function () {
+angular.module('swipe-menu').directive('swipeMenu', ['$timeout', function ($timeout) {
     'use strict';
 
     window.requestAnimFrame = (function () {
-        return window.requestAnimationFrame       ||
+        return window.requestAnimationFrame    ||
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame    ||
             function (callback) {
@@ -31,7 +31,7 @@ angular.module('swipe-menu').directive('swipeMenu', function () {
     }
 
     return {
-
+        
         link: function (scope, element, attrs) {
 
             // Gloabl state variables
@@ -39,9 +39,11 @@ angular.module('swipe-menu').directive('swipeMenu', function () {
                 STATE_LEFT_SIDE = 2,
                 STATE_RIGHT_SIDE = 3,
                 FAST_SWIPE = 300,
+                
+                menuSettings = scope.swipeMenu,
 
-                menuElement = document.getElementById(attrs.swipeMenu),
-                menuReturn = parseFloat(attrs.menuReturn),
+                menuElement = document.getElementById(menuSettings.menuId),
+                menuReturn = menuSettings.returnSize,
 
                 isAnimating = false,
                 initialTouchPos = null,
@@ -52,26 +54,16 @@ angular.module('swipe-menu').directive('swipeMenu', function () {
                 menuXPostition = -menuReturn,
                 currentState = STATE_DEFAULT;
 
-            function getGesturePointFromEvent(evt) {
-                var point = {};
-
-                if (evt.targetTouches) {
-                    point.x = evt.targetTouches[0].clientX;
-                    point.y = evt.targetTouches[0].clientY;
-                } else {
-                    // Either Mouse event or Pointer Event
-                    point.x = evt.clientX;
-                    point.y = evt.clientY;
-                }
-
-                return point;
-            }
-
             function setTransformStyle(contentX, menuX) {
                 var style;
 
                 if (menuReturn) {
-                    style = 'translateX(' + menuX + 'px)';
+                    
+                    if (menuX > 0) {
+                        menuX = 0;
+                    }
+                    
+                    style = 'translate3d(' + menuX + 'px, 0px, 0)';
 
                     menuElement.style['-ms-transform'] = style;
                     menuElement.style['-webkit-transform'] = style;
@@ -79,7 +71,7 @@ angular.module('swipe-menu').directive('swipeMenu', function () {
                     menuElement.style.transform = style;
                 }
 
-                style = 'translateX(' + contentX + 'px)';
+                style = 'translate3d(' + contentX + 'px, 0px, 0)';
 
                 element[0].style['-ms-transform'] = style;
                 element[0].style['-webkit-transform'] = style;
@@ -121,39 +113,56 @@ angular.module('swipe-menu').directive('swipeMenu', function () {
                 setTransformStyle(currentXPosition, menuXPostition);
 
                 currentState = newState;
+
+                element[0].style.transition = 'all 150ms ease-out';
+                menuElement.style.transition = 'all 150ms ease-out';
             }
 
             function updateSwipeRestPosition() {
                 var differenceInX = initialTouchPos.x - lastTouchPos.x,
                     newState = STATE_DEFAULT;
 
-                currentXPosition = currentXPosition - differenceInX;
+                if (differenceInX && Math.abs(differenceInX) > 20) {
+                    currentXPosition = currentXPosition - differenceInX;
 
-                // fast swipe movement implies a full movement
-                if (lastTouchTime - initialTouchTime <= FAST_SWIPE) {
-                    if (differenceInX > 0) {
-                        newState = STATE_LEFT_SIDE;
+                    // fast swipe movement implies a full movement
+                    if (lastTouchTime - initialTouchTime <= FAST_SWIPE) {
+                        if (differenceInX > 0) {
+                            newState = STATE_LEFT_SIDE;
+                        } else {
+                            newState = STATE_RIGHT_SIDE;
+                        }
                     } else {
-                        newState = STATE_RIGHT_SIDE;
+                        if (currentXPosition < menuElement.clientWidth / 2) {
+                            newState = STATE_LEFT_SIDE;
+                        } else {
+                            newState = STATE_RIGHT_SIDE;
+                        }
                     }
+                    
+                    changeState(newState);
+                }
+            }
+
+            function getGesturePointFromEvent(evt) {
+                var point = {};
+
+                if (evt.targetTouches) {
+                    point.x = evt.targetTouches[0].clientX;
+                    point.y = evt.targetTouches[0].clientY;
                 } else {
-                    if (currentXPosition < menuElement.clientWidth / 2) {
-                        newState = STATE_LEFT_SIDE;
-                    } else {
-                        newState = STATE_RIGHT_SIDE;
-                    }
+                    // Either Mouse event or Pointer Event
+                    point.x = evt.clientX;
+                    point.y = evt.clientY;
                 }
 
-                changeState(newState);
-
-                element[0].style.transition = 'all 150ms ease-out';
-                menuElement.style.transition = 'all 150ms ease-out';
+                return point;
             }
 
             // Handle move gestures
             function handleGestureMove(evt) {
                 evt.preventDefault();
-
+                
                 lastTouchPos = getGesturePointFromEvent(evt);
 
                 var position = currentXPosition - (initialTouchPos.x - lastTouchPos.x);
@@ -166,12 +175,11 @@ angular.module('swipe-menu').directive('swipeMenu', function () {
 
                 window.requestAnimFrame(onAnimFrame);
             }
-
+            
             // Handle end gestures
             function handleGestureEnd(evt) {
-
                 evt.preventDefault();
-
+                
                 if (evt.touches && evt.touches.length > 0) {
                     return;
                 }
@@ -199,11 +207,13 @@ angular.module('swipe-menu').directive('swipeMenu', function () {
 
                 lastTouchTime = new Date();
                 updateSwipeRestPosition();
+                
+                return false;
             }
 
             // Handle the start of gestures
             function handleGestureStart(evt) {
-                evt.preventDefault();
+                //evt.preventDefault();
                 
                 if (evt.touches && evt.touches.length > 1) {
                     return;
@@ -229,6 +239,7 @@ angular.module('swipe-menu').directive('swipeMenu', function () {
                 }
 
                 initialTouchPos = getGesturePointFromEvent(evt);
+                lastTouchPos = initialTouchPos;
                 initialTouchTime = new Date();
 
                 element[0].style.transition = 'initial';
@@ -246,8 +257,20 @@ angular.module('swipe-menu').directive('swipeMenu', function () {
                 element[0].addEventListener('mousedown', handleGestureStart, true);
             }
 
+            scope.$on('TOGGLE_MENU', function () {
+                $timeout(function () {
+                    if (currentState === STATE_RIGHT_SIDE) {
+                        currentState = STATE_LEFT_SIDE;
+                    } else {
+                        currentState = STATE_RIGHT_SIDE;
+                    }
+
+                    changeState(currentState);
+                });
+            });
+
         }
 
     };
 
-});
+}]);
