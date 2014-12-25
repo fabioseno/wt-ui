@@ -3,33 +3,33 @@ wt-ui
 
 A set of reusable UI components built as AngularJS directives and services including:
 
-### Dynamic Slider ###
+#### Dynamic Slider ####
 
-### key-enter ###
+#### key-enter ####
 Allows execution of different actions based on selected keyboard keys
 
-### Loader ###
+#### Loader ####
 A loader component that indicates async operations are in progress
 
-### Map ###
+#### Map ####
 A Google Maps proxy
 
-### Match ###
+#### Match ####
 Component that allows value comparison between inputs
 
-### Pager ###
+#### Pager ####
 A page navigator component
 
-### Pillbox ###
+#### Pillbox ####
 A tag input component
 
-### Scroller ###
+#### Scroller ####
 Infinite scroll component
 
-### Smart Pager ###
+#### Smart Pager ####
 
-### Swipe Menu ###
+#### Swipe Menu ####
 Swipeble menu
 
-### Toastr  ###
+#### Toastr  ####
 Notification library
